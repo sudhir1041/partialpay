@@ -278,6 +278,9 @@ Yes you can charge Woocommerce payment processing fees based on the order total.
 
 == Changelog ==
 
+= 1.1.9.18 =
+* Parent order marked processing and invoice regenerated when remaining payment is received
+
 = 1.1.9.17 =
 * Translation added for woocommerce payment processing fees module
 
