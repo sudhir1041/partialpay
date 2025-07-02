@@ -54,7 +54,6 @@ class pisol_dpmw_CustomFields{
         );
 
         add_action('pisol_custom_field_dpmw_custom_select', array($this,'custom_select'), 10, 2);
-        add_action('pisol_custom_field_dpmw_partial_payment_fee_pro', array($this,'dpmw_partial_payment_fee_pro'), 10, 2);
         
     }
 

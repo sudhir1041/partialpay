@@ -200,7 +200,14 @@ class Pi_dpmw_partial_payment_ui{
         if($partial_payment_rule  === false) return;
 
         $advance_amount = self::getAdvanceAmountToPay( $partial_payment_rule, $total );
-        
+
+        $partial_fee = floatval( get_option( 'pi_dpmw_partial_payment_fee', 0 ) );
+        $fee_upfront = get_option( 'pi_dpmw_charge_partial_fee_upfront', '0' );
+
+        if ( $fee_upfront && $partial_fee > 0 ) {
+            $advance_amount += $partial_fee;
+        }
+
         if(Session::partialPaymentSelected() && (!empty($advance_amount) && $advance_amount > 0)){
             $balance_amt = self::getBalanceAmount( $partial_payment_rule, $total, $advance_amount);
 

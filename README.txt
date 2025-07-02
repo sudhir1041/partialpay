@@ -312,7 +312,7 @@ Yes you can charge Woocommerce payment processing fees based on the order total.
 * block based checkout not triggering payment method based fee fixed
 
 = 1.1.9.2 =
-* Charge partial payment fee upfront in pro version
+* Charge partial payment fee upfront option added
 
 = 1.1.9.1 =
 * Tested for WC 9.6.0
