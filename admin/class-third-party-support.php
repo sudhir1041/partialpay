@@ -17,6 +17,9 @@ class pi_dpmw_third_party_support{
          * https://wordpress.org/plugins/woocommerce-pdf-invoices-packing-slips/
          */
         add_filter( 'wpo_wcpdf_meta_box_actions', [$this, 'addingPaidRemainingAmount'], 10, 2);
+
+        // Generate a fresh invoice when the second payment is completed.
+        add_action( 'pi_dpmw_second_payment_completed', [ $this, 'generate_full_invoice' ] );
     }
 
     function addingPaidRemainingAmount($meta_box_actions, $post_id ){
@@ -50,6 +53,19 @@ class pi_dpmw_third_party_support{
         }
 
         return $meta_box_actions;
+    }
+
+    /**
+     * Create a new invoice for the parent order once the remaining payment is paid.
+     * This requires the WooCommerce PDF Invoices & Packing Slips plugin.
+     */
+    function generate_full_invoice( $order ){
+        if( class_exists( 'WPO_WCPDF' ) ){
+            $document = WPO_WCPDF()->documents->get_document( 'invoice', $order );
+            if ( $document ) {
+                $document->create();
+            }
+        }
     }
 }
 pi_dpmw_third_party_support::get_instance();

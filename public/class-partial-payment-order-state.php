@@ -36,6 +36,17 @@ class Pi_dpmw_partial_payment_order_state{
                     }
                 }
 
+            } elseif ( Pi_dpmw_partial_payment::is_remaining_payment_order( $order_id ) ) {
+                if ( $to === 'completed' ) {
+                    $parent_order->set_status( 'processing' );
+                    $parent_order->add_order_note( __( 'Remaining payment received.', 'disable-payment-method-for-woocommerce' ) );
+                    $parent_order->save();
+
+                    /**
+                     * Allow third parties to generate final invoice.
+                     */
+                    do_action( 'pi_dpmw_second_payment_completed', $parent_order );
+                }
             }
         }
     }
