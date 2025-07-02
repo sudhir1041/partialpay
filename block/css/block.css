@@ -1,0 +1,14 @@
+body.pi-dpmw-processing button.wc-block-components-checkout-place-order-button{
+    pointer-events: none;
+    opacity:0.5;
+}
+
+body.pi-dpmw-processing .wc-block-checkout__payment-method .wc-block-components-checkout-step__container{
+    pointer-events: none;
+    opacity:0.5;
+}
+
+body.pi-dpmw-processing .wp-block-woocommerce-checkout-order-summary-block{
+    pointer-events: none;
+    opacity:0.4;
+}
