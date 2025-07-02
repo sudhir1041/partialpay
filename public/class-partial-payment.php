@@ -317,20 +317,20 @@ class Pi_dpmw_partial_payment{
 
         if(empty($fees_selected)) return;
 
-        $partial_payment_fees = 0; // In future we can give extra charge option in free version as well
+        $partial_payment_fees = floatval( get_option( 'pi_dpmw_partial_payment_fee', 0 ) );
 
-        if( empty($partial_payment_fees) ) return;
+        if( $partial_payment_fees <= 0 ) return;
 
         $label = get_option('pi_dpmw_partial_pay_fees', 'Partial payment fees');
+
         $fee_arg = array(
-            'id' => 'pisol-dpmw-fees:'.$partial_payment_rule,
-            'name'=> $label,
+            'id'     => 'pisol-dpmw-fees:'.$partial_payment_rule,
+            'name'   => $label,
             'amount' => $partial_payment_fees,
-            /*'taxable' =>  $taxable,
-            'tax_class' => $tax_class */
         );
+
         $cart->fees_api()->add_fee( $fee_arg );
-    }  
+    }
    
 	/**
 	 * register post type for deposit

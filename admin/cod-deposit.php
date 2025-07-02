@@ -29,9 +29,21 @@ class pisol_dpmw_options{
 
             array('field'=>'pi_dpmw_partial_amt', 'label'=>__('Partial payment', 'disable-payment-method-for-woocommerce'), 'desc'=>__('partial payment amt will be flat amount or percent of the total or (in pro it can be Shipping amount)', 'disable-payment-method-for-woocommerce'), 'type'=>'text', 'default'=>"0"),
 
-            array('field'=>'pi_dpmw_partial_payment_fee_pro', 'type' => 'dpmw_partial_payment_fee_pro'),
+            array(
+                'field' => 'pi_dpmw_partial_payment_fee',
+                'label' => __('Partial payment fee', 'disable-payment-method-for-woocommerce'),
+                'desc'  => __('Charge extra fee when customer select partial payment option', 'disable-payment-method-for-woocommerce'),
+                'type'  => 'text',
+                'default' => '0'
+            ),
 
-            array('field'=>'pi_dpmw_charge_partial_fee_upfront','label'=>__('Charge partial fee upfront', 'disable-payment-method-for-woocommerce'), 'desc'=>__('When you enable this option, the Partial Payment Fee will be added to the initial partial payment that the customer makes. For example, if you set the Partial Payment amount to $100 and the Partial Payment Fee to $60, then with this option enabled, the customer will need to pay $160 at checkout. However, if this option is disabled, the customer will only pay $100 upfront, and the $60 fee will be included in the remaining balance.', 'disable-payment-method-for-woocommerce'),'type'=>'switch','default'=> '0', 'pro' => true),
+            array(
+                'field'  => 'pi_dpmw_charge_partial_fee_upfront',
+                'label'  => __('Charge partial fee upfront', 'disable-payment-method-for-woocommerce'),
+                'desc'   => __('When you enable this option, the Partial Payment Fee will be added to the initial partial payment that the customer makes. For example, if you set the Partial Payment amount to $100 and the Partial Payment Fee to $60, then with this option enabled, the customer will need to pay $160 at checkout. However, if this option is disabled, the customer will only pay $100 upfront, and the $60 fee will be included in the remaining balance.', 'disable-payment-method-for-woocommerce'),
+                'type'   => 'switch',
+                'default'=> '0'
+            ),
 
             array('field'=>'pi_dpmw_remove_payment_methods','label'=>__('Remove payment method when partial payment enabled', 'disable-payment-method-for-woocommerce'), 'desc'=>__('Remove Payment methods for when partial payment option is enabled', 'disable-payment-method-for-woocommerce'),'type'=>'multiselect','default'=>array('cod'), 'value'=>$this->paymentMethods()),
 
