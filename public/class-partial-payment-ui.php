@@ -128,6 +128,11 @@ class Pi_dpmw_partial_payment_ui{
 
         if(empty($rule)) return;
 
+        if ( ! empty( WC()->cart->get_applied_coupons() ) ) {
+            wc_add_notice( __( 'Partial payment is not available when a coupon is applied.', 'disable-payment-method-for-woocommerce' ), 'notice' );
+            return;
+        }
+
         if($this->is_total_less_then_deposit_amt(  )) return;
 
         $fees_selected = Session::partialPaymentSelectedInSession();
@@ -480,6 +485,8 @@ class Pi_dpmw_partial_payment_ui{
         foreach ( $applied as $code ) {
             $cart->remove_coupon( $code );
         }
+
+        wc_add_notice( __( 'Applied coupons were removed because partial payment was selected.', 'disable-payment-method-for-woocommerce' ), 'notice' );
     }
 
     function hide_pay_link($actions, $order){
