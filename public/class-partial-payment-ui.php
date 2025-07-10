@@ -22,6 +22,11 @@ class Pi_dpmw_partial_payment_ui{
         add_action('woocommerce_before_template_part', [$this, 'showPartialPaymentOption'], 10, 1);
 
         /**
+         * Remove any applied coupons when partial payment is selected
+         */
+        add_action( 'woocommerce_before_calculate_totals', [ $this, 'maybe_remove_coupons' ], 1 );
+
+        /**
          * This sets the main total of the checkout
          */
         add_filter( 'woocommerce_calculated_total', [$this, 'recalculate_price'], PHP_INT_MAX - 10, 2 );
@@ -450,6 +455,31 @@ class Pi_dpmw_partial_payment_ui{
         }
 
         return $url;
+    }
+
+    /**
+     * Remove applied coupons when partial payment is selected.
+     *
+     * @param WC_Cart $cart
+     */
+    function maybe_remove_coupons( $cart ) {
+        if ( ! Session::partialPaymentSelected() ) {
+            return;
+        }
+
+        if ( ! is_object( $cart ) ) {
+            return;
+        }
+
+        $applied = $cart->get_applied_coupons();
+
+        if ( empty( $applied ) ) {
+            return;
+        }
+
+        foreach ( $applied as $code ) {
+            $cart->remove_coupon( $code );
+        }
     }
 
     function hide_pay_link($actions, $order){
