@@ -63,6 +63,10 @@ This plugin allows you to disable any payment gateway of WooCommerce based on mu
 
 &#9989; Restrict payment method by coupon code applied by customer
 
+&#9989; Automatically remove coupons when partial payment is selected *(configurable in admin)*
+
+&#9989; Partial payment option is disabled if any coupons are applied
+
 &#9989; Disable COD when user select Different shipping address option during checkout
 
 &#9989; In a multi currency site you can disable payment method based on the currency selected by the customer

@@ -22,6 +22,11 @@ class Pi_dpmw_partial_payment_ui{
         add_action('woocommerce_before_template_part', [$this, 'showPartialPaymentOption'], 10, 1);
 
         /**
+         * Remove any applied coupons when partial payment is selected
+         */
+        add_action( 'woocommerce_before_calculate_totals', [ $this, 'maybe_remove_coupons' ], 1 );
+
+        /**
          * This sets the main total of the checkout
          */
         add_filter( 'woocommerce_calculated_total', [$this, 'recalculate_price'], PHP_INT_MAX - 10, 2 );
@@ -122,6 +127,13 @@ class Pi_dpmw_partial_payment_ui{
         $rule = $this->partialPaymentRuleAvailable();
 
         if(empty($rule)) return;
+
+        $auto_remove = get_option( 'pi_dpmw_auto_remove_coupons', 1 );
+
+        if ( $auto_remove && ! empty( WC()->cart->get_applied_coupons() ) ) {
+            wc_add_notice( __( 'Partial payment is not available when a coupon is applied.', 'disable-payment-method-for-woocommerce' ), 'notice' );
+            return;
+        }
 
         if($this->is_total_less_then_deposit_amt(  )) return;
 
@@ -450,6 +462,36 @@ class Pi_dpmw_partial_payment_ui{
         }
 
         return $url;
+    }
+
+    /**
+     * Remove applied coupons when partial payment is selected.
+     *
+     * @param WC_Cart $cart
+    */
+    function maybe_remove_coupons( $cart ) {
+        if ( ! get_option( 'pi_dpmw_auto_remove_coupons', 1 ) ) {
+            return;
+        }
+        if ( ! Session::partialPaymentSelected() ) {
+            return;
+        }
+
+        if ( ! is_object( $cart ) ) {
+            return;
+        }
+
+        $applied = $cart->get_applied_coupons();
+
+        if ( empty( $applied ) ) {
+            return;
+        }
+
+        foreach ( $applied as $code ) {
+            $cart->remove_coupon( $code );
+        }
+
+        wc_add_notice( __( 'Applied coupons were removed because partial payment was selected.', 'disable-payment-method-for-woocommerce' ), 'notice' );
     }
 
     function hide_pay_link($actions, $order){

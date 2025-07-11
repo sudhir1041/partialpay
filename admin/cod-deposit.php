@@ -25,6 +25,8 @@ class pisol_dpmw_options{
             
             array('field'=>'pi_dpmw_enable_partial_payment', 'label'=>__('Enable partial payment for order', 'disable-payment-method-for-woocommerce'), 'desc'=>__('When enabled you can collect some amount from the customer as partial payment for order', 'disable-payment-method-for-woocommerce'), 'type'=>'switch', 'default'=>"0"),
 
+            array('field'=>'pi_dpmw_auto_remove_coupons', 'label'=>__('Remove coupons when partial payment selected', 'disable-payment-method-for-woocommerce'), 'desc'=>__('If enabled, all applied coupons will be removed when a customer opts for partial payment and the option will be hidden when coupons are active.', 'disable-payment-method-for-woocommerce'), 'type'=>'switch', 'default'=>'1'),
+
             array('field'=>'pi_dpmw_partial_amt_calculation', 'label'=>__('Partial payment based on', 'disable-payment-method-for-woocommerce'), 'desc'=>__('How the partial payment amount will be calculated', 'disable-payment-method-for-woocommerce'), 'type'=>'dpmw_custom_select', 'default'=>"fixed", 'value'=>['fixed' => 'Fixed amount', 'percentage' => 'Percentage of Total', 'shipping_percentage' => 'Shippig charege percentage'], 'pro_options' => ['shipping_percentage']),
 
             array('field'=>'pi_dpmw_partial_amt', 'label'=>__('Partial payment', 'disable-payment-method-for-woocommerce'), 'desc'=>__('partial payment amt will be flat amount or percent of the total or (in pro it can be Shipping amount)', 'disable-payment-method-for-woocommerce'), 'type'=>'text', 'default'=>"0"),
